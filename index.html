@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Miorah Boutique – A Reflection of Beauty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm-white: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --deep: #1a1410;
+    --charcoal: #2d2520;
+    --muted: #8a7d6e;
+    --blush: #e8d5c8;
+    --rose: #c4856a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--deep);
+    overflow-x: hidden;
+  }
+
+  /* ───── PAGE SYSTEM ───── */
+  .page { display:none; min-height:100vh; }
+  .page.active { display:block; }
+
+  /* ───── NAV ───── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:1000;
+    background: rgba(250,247,242,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 0 4vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 500;
+    color: var(--deep); letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+  .nav-logo span { color: var(--gold); font-style: italic; }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; align-items:center; }
+  .nav-links a {
+    font-size: 0.78rem; font-weight: 400; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--charcoal);
+    text-decoration: none; position: relative; cursor: pointer;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px;
+    background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+  .nav-cta {
+    background: var(--deep); color: var(--cream) !important;
+    padding: 0.6rem 1.4rem; letter-spacing: 0.15em;
+  }
+  .nav-cta::after { display:none !important; }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--deep) !important; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+  .hamburger span { width:24px; height:1.5px; background:var(--deep); transition:0.3s; }
+  .mobile-menu {
+    display:none; position:fixed; top:72px; left:0; right:0;
+    background: var(--cream); z-index:999;
+    padding: 2rem; flex-direction:column; gap:1.5rem;
+    border-bottom: 1px solid var(--gold-light);
+  }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a {
+    font-size:0.85rem; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--charcoal); text-decoration:none; cursor:pointer;
+  }
+
+  /* ───── HERO ───── */
+  .hero {
+    height: 100vh; position:relative;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero-bg {
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, #1a1410 0%, #2d2520 40%, #3d3025 70%, #c9a84c22 100%);
+  }
+  .hero-pattern {
+    position:absolute; inset:0; opacity:0.06;
+    background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+  }
+  .hero-img-container {
+    position:absolute; right:0; top:0; bottom:0; width:55%;
+    overflow:hidden;
+  }
+  .hero-img-container img {
+    width:100%; height:100%; object-fit:cover; opacity:0.45;
+    filter: grayscale(20%) sepia(15%);
+  }
+  .hero-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(90deg, #1a1410 35%, transparent 70%);
+  }
+  .hero-content {
+    position:relative; z-index:2; padding: 0 6vw;
+    max-width:700px; animation: fadeUp 1.2s ease forwards;
+  }
+  .hero-tag {
+    font-size:0.7rem; letter-spacing:0.35em; text-transform:uppercase;
+    color: var(--gold); margin-bottom:1.5rem;
+    display:flex; align-items:center; gap:1rem;
+  }
+  .hero-tag::before { content:''; width:40px; height:1px; background:var(--gold); }
+  .hero-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight:300; line-height:1.05;
+    color: var(--cream); margin-bottom:1.5rem;
+  }
+  .hero-title em { font-style:italic; color: var(--gold-light); }
+  .hero-sub {
+    font-size:0.9rem; font-weight:300; letter-spacing:0.08em;
+    color: rgba(250,247,242,0.65); max-width:420px;
+    line-height:1.8; margin-bottom:3rem;
+  }
+  .hero-btns { display:flex; gap:1.2rem; flex-wrap:wrap; }
+  .btn-primary {
+    padding:1rem 2.5rem;
+    background: var(--gold); color: var(--deep);
+    font-size:0.75rem; font-weight:500; letter-spacing:0.2em;
+    text-transform:uppercase; border:none; cursor:pointer;
+    transition: all 0.3s; text-decoration:none; display:inline-block;
+  }
+  .btn-primary:hover { background: var(--cream); }
+  .btn-outline {
+    padding:1rem 2.5rem;
+    background: transparent; color: var(--cream);
+    font-size:0.75rem; font-weight:400; letter-spacing:0.2em;
+    text-transform:uppercase; border:1px solid rgba(250,247,242,0.4);
+    cursor:pointer; transition:all 0.3s; text-decoration:none; display:inline-block;
+  }
+  .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+  .hero-scroll {
+    position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+    color:rgba(250,247,242,0.4); font-size:0.65rem; letter-spacing:0.2em;
+    text-transform:uppercase; z-index:2; animation: bounce 2s infinite;
+  }
+  .hero-scroll::after {
+    content:''; width:1px; height:40px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent);
+  }
+
+  /* ───── SECTIONS ───── */
+  section { padding: 7rem 6vw; }
+  .section-tag {
+    font-size:0.68rem; letter-spacing:0.35em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:1rem;
+    display:flex; align-items:center; gap:0.8rem;
+  }
+  .section-tag::before { content:''; width:30px; height:1px; background:var(--gold); }
+  .section-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight:300; line-height:1.2; color:var(--deep);
+    margin-bottom:1.5rem;
+  }
+  .section-title em { font-style:italic; color:var(--rose); }
+  .section-sub {
+    font-size:0.88rem; font-weight:300; color:var(--muted);
+    line-height:1.9; max-width:500px;
+  }
+  .divider {
+    width:60px; height:1px; background:var(--gold);
+    margin: 2rem 0;
+  }
+
+  /* ───── HOME – FEATURED CATEGORIES ───── */
+  .categories-grid {
+    display:grid; grid-template-columns: repeat(3,1fr);
+    gap:1.5rem; margin-top:4rem;
+  }
+  .cat-card {
+    position:relative; overflow:hidden; cursor:pointer;
+    aspect-ratio: 3/4;
+    transition: transform 0.4s;
+  }
+  .cat-card:hover { transform: translateY(-6px); }
+  .cat-card img {
+    width:100%; height:100%; object-fit:cover;
+    transition: transform 0.6s; filter: brightness(0.75);
+  }
+  .cat-card:hover img { transform: scale(1.06); }
+  .cat-card-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(26,20,16,0.85) 0%, transparent 55%);
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:1.8rem;
+  }
+  .cat-card-tag {
+    font-size:0.62rem; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:0.4rem;
+  }
+  .cat-card-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem; font-weight:400; color:var(--cream);
+    line-height:1.2; margin-bottom:0.6rem;
+  }
+  .cat-card-sub { font-size:0.75rem; color:rgba(250,247,242,0.6); font-weight:300; }
+  .cat-card-arrow {
+    position:absolute; top:1.5rem; right:1.5rem;
+    width:36px; height:36px; border:1px solid rgba(201,168,76,0.5);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold); font-size:1rem;
+    opacity:0; transform:translateY(-6px); transition:all 0.3s;
+  }
+  .cat-card:hover .cat-card-arrow { opacity:1; transform:translateY(0); }
+
+  /* ───── HOME – MARQUEE ───── */
+  .marquee-wrap {
+    background:var(--deep); padding:1.2rem 0; overflow:hidden;
+    position:relative;
+  }
+  .marquee-track {
+    display:flex; gap:3rem; white-space:nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-style:italic;
+    color:var(--gold-light); letter-spacing:0.05em; flex-shrink:0;
+  }
+  .marquee-dot { color:var(--gold); margin:0 0.5rem; }
+
+  /* ───── HOME – WHY MIORAH ───── */
+  .why-grid {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:6rem; align-items:center; margin-top:2rem;
+  }
+  .why-img-wrap {
+    position:relative;
+  }
+  .why-img-wrap img {
+    width:100%; aspect-ratio:3/4; object-fit:cover; display:block;
+  }
+  .why-img-accent {
+    position:absolute; top:-1.5rem; left:-1.5rem;
+    width:60%; height:60%; border:1px solid var(--gold);
+    pointer-events:none; z-index:-1;
+  }
+  .why-stats {
+    position:absolute; bottom:-2rem; right:-2rem;
+    background:var(--deep); padding:1.5rem 2rem; min-width:160px;
+  }
+  .why-stat-num {
+    font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:var(--gold);
+  }
+  .why-stat-label { font-size:0.7rem; letter-spacing:0.15em; color:var(--cream); text-transform:uppercase; }
+  .why-features { display:flex; flex-direction:column; gap:2rem; margin-top:2.5rem; }
+  .why-feat { display:flex; gap:1.2rem; align-items:flex-start; }
+  .why-feat-icon {
+    width:42px; height:42px; border:1px solid var(--gold-light);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; flex-shrink:0; color:var(--gold);
+  }
+  .why-feat-title { font-size:0.85rem; font-weight:500; letter-spacing:0.08em; margin-bottom:0.3rem; }
+  .why-feat-desc { font-size:0.8rem; color:var(--muted); line-height:1.7; font-weight:300; }
+
+  /* ───── COLLECTIONS PAGE ───── */
+  .collections-hero {
+    height:55vh; position:relative;
+    display:flex; align-items:flex-end; padding:4rem 6vw;
+    overflow:hidden;
+  }
+  .collections-hero-bg {
+    position:absolute; inset:0;
+    background: linear-gradient(135deg, #2d2520, #1a1410);
+  }
+  .collections-hero-img {
+    position:absolute; inset:0;
+    width:100%; height:100%; object-fit:cover; opacity:0.3;
+  }
+  .collections-hero-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(26,20,16,0.9), rgba(26,20,16,0.3));
+  }
+  .collections-hero-content { position:relative; z-index:2; }
+  .page-hero-tag {
+    font-size:0.68rem; letter-spacing:0.35em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:1rem;
+  }
+  .page-hero-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size: clamp(2.5rem,5vw,4rem);
+    color:var(--cream); font-weight:300;
+  }
+
+  /* Filter tabs */
+  .filter-tabs {
+    display:flex; gap:0.5rem; padding:2rem 6vw;
+    border-bottom:1px solid rgba(201,168,76,0.15);
+    background:var(--warm-white); flex-wrap:wrap;
+  }
+  .filter-tab {
+    padding:0.6rem 1.4rem; font-size:0.73rem; letter-spacing:0.15em;
+    text-transform:uppercase; cursor:pointer; border:1px solid transparent;
+    transition:all 0.3s; font-family:'Jost',sans-serif; background:none;
+  }
+  .filter-tab.active, .filter-tab:hover {
+    border-color:var(--gold); color:var(--gold);
+  }
+
+  /* Gallery grid */
+  .gallery-section { padding: 4rem 6vw 7rem; }
+  .gallery-header { margin-bottom:3rem; }
+  .gallery-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1.2rem;
+  }
+  .gallery-item {
+    position:relative; overflow:hidden; cursor:pointer;
+  }
+  .gallery-item:nth-child(4n+1) { grid-row: span 2; }
+  .gallery-item img {
+    width:100%; height:100%; object-fit:cover;
+    transition:transform 0.6s; aspect-ratio:auto;
+    min-height:280px;
+    filter:brightness(0.85);
+  }
+  .gallery-item:hover img { transform:scale(1.05); filter:brightness(0.7); }
+  .gallery-item-info {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:1.5rem; background:linear-gradient(to top, rgba(26,20,16,0.85), transparent);
+    transform:translateY(10px); opacity:0; transition:all 0.3s;
+  }
+  .gallery-item:hover .gallery-item-info { transform:translateY(0); opacity:1; }
+  .gallery-item-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--cream); }
+  .gallery-item-price { font-size:0.75rem; color:var(--gold); letter-spacing:0.1em; margin-top:0.3rem; }
+
+  .collection-block { margin-bottom:6rem; display:none; }
+  .collection-block.visible { display:block; }
+
+  /* ───── CUSTOMIZATION PAGE ───── */
+  .custom-intro {
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:6rem; align-items:center; padding:7rem 6vw;
+  }
+  .custom-intro img {
+    width:100%; aspect-ratio:3/4; object-fit:cover;
+    filter:brightness(0.9);
+  }
+  .custom-steps { padding:0 6vw 7rem; }
+  .steps-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; margin-top:3rem; }
+  .step-card {
+    padding:2.5rem 1.8rem;
+    border:1px solid rgba(201,168,76,0.2);
+    position:relative; transition:all 0.3s;
+    background:var(--warm-white);
+  }
+  .step-card:hover { border-color:var(--gold); transform:translateY(-4px); }
+  .step-num {
+    font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300;
+    color:rgba(201,168,76,0.2); position:absolute; top:1rem; right:1.5rem;
+    line-height:1;
+  }
+  .step-icon { font-size:1.5rem; margin-bottom:1rem; }
+  .step-title { font-size:0.85rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.8rem; }
+  .step-desc { font-size:0.8rem; color:var(--muted); line-height:1.8; font-weight:300; }
+
+  /* ───── ABOUT PAGE ───── */
+  .about-values { background:var(--deep); padding:7rem 6vw; }
+  .values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3rem; margin-top:4rem; }
+  .value-card { padding:3rem 2rem; border:1px solid rgba(201,168,76,0.15); }
+  .value-card:hover { border-color:var(--gold); }
+  .value-icon { font-size:2rem; margin-bottom:1.5rem; }
+  .value-title {
+    font-family:'Cormorant Garamond',serif; font-size:1.5rem;
+    color:var(--cream); margin-bottom:1rem;
+  }
+  .value-desc { font-size:0.82rem; color:rgba(250,247,242,0.55); line-height:1.9; font-weight:300; }
+
+  /* ───── CONTACT PAGE ───── */
+  .contact-details { margin-top:3rem; display:flex; flex-direction:column; gap:2.5rem; }
+  .contact-detail { display:flex; gap:1.2rem; align-items:flex-start; }
+  .contact-detail-icon {
+    width:40px; height:40px; border:1px solid rgba(201,168,76,0.3);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1rem; flex-shrink:0; color:var(--gold);
+  }
+  .contact-detail-label { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:0.3rem; }
+  .contact-detail-value { font-size:0.9rem; color:rgba(250,247,242,0.75); font-weight:300; line-height:1.6; }
+  .social-links { display:flex; gap:1rem; margin-top:3rem; flex-wrap:wrap; }
+  .social-link {
+    padding:0.7rem 1.5rem; border:1px solid rgba(201,168,76,0.3);
+    font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--cream); text-decoration:none; cursor:pointer; transition:all 0.3s;
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .social-link:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* ───── FOOTER ───── */
+  footer {
+    background:var(--deep); padding:5rem 6vw 2rem;
+    border-top:1px solid rgba(201,168,76,0.15);
+  }
+  .footer-top {
+    display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr;
+    gap:3rem; padding-bottom:4rem;
+    border-bottom:1px solid rgba(201,168,76,0.1);
+  }
+  .footer-brand-name {
+    font-family:'Cormorant Garamond',serif; font-size:1.8rem;
+    color:var(--cream); margin-bottom:1rem;
+  }
+  .footer-brand-name span { color:var(--gold); font-style:italic; }
+  .footer-brand-desc { font-size:0.8rem; color:rgba(250,247,242,0.45); line-height:1.9; font-weight:300; }
+  .footer-col-title {
+    font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:1.5rem;
+  }
+  .footer-links { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
+  .footer-links a {
+    font-size:0.8rem; color:rgba(250,247,242,0.45); text-decoration:none;
+    cursor:pointer; transition:color 0.2s; font-weight:300;
+  }
+  .footer-links a:hover { color:var(--cream); }
+  .footer-bottom {
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:2rem; flex-wrap:wrap; gap:1rem;
+  }
+  .footer-copy { font-size:0.72rem; color:rgba(250,247,242,0.25); font-weight:300; }
+
+  /* ───── TOAST / CONFIRMATION ───── */
+  .toast {
+    position:fixed; bottom:2rem; right:2rem;
+    background:var(--deep); border:1px solid var(--gold);
+    padding:1rem 2rem; font-size:0.8rem; color:var(--cream);
+    letter-spacing:0.05em; z-index:9999;
+    transform:translateY(100px); opacity:0; transition:all 0.4s;
+  }
+  .toast.show { transform:translateY(0); opacity:1; }
+
+  /* ───── ANIMATIONS ───── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(30px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes bounce {
+    0%,100% { transform:translateX(-50%) translateY(0); }
+    50% { transform:translateX(-50%) translateY(8px); }
+  }
+  @keyframes marquee {
+    from { transform:translateX(0); }
+    to { transform:translateX(-50%); }
+  }
+  .reveal {
+    opacity:0; transform:translateY(20px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* ───── RESPONSIVE ───── */
+  @media(max-width:900px){
+    .categories-grid, .steps-grid, .values-grid { grid-template-columns:1fr 1fr; }
+    .why-grid, .custom-intro { grid-template-columns:1fr; gap:3rem; }
+    .footer-top { grid-template-columns:1fr 1fr; }
+    .hero-img-container { width:100%; opacity:0.25; }
+    .gallery-grid { grid-template-columns:1fr 1fr; }
+    .gallery-item:nth-child(4n+1) { grid-row:span 1; }
+  }
+  @media(max-width:600px){
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .categories-grid { grid-template-columns:1fr; }
+    .steps-grid, .values-grid { grid-template-columns:1fr; }
+    .footer-top { grid-template-columns:1fr; }
+    .filter-tabs { gap:0.3rem; }
+    .gallery-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav id="mainNav">
+  <div class="nav-logo" onclick="showPage('home')">Miorah <span>Boutique</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('collections')" id="nav-collections">Collections</a></li>
+    <li><a onclick="showPage('customization')" id="nav-customization">Customization</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About Us</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="showPage('home');toggleMobile()">Home</a>
+  <a onclick="showPage('collections');toggleMobile()">Collections</a>
+  <a onclick="showPage('customization');toggleMobile()">Customization</a>
+  <a onclick="showPage('about');toggleMobile()">About Us</a>
+  <a onclick="showPage('contact');toggleMobile()">Contact</a>
+</div>
+
+<div class="toast" id="toast">✓ Message sent! We'll be in touch soon.</div>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-img-container">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80" alt="Boutique fashion"/>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Est. 2020 · Bengaluru</div>
+      <h1 class="hero-title">A <em>Reflection</em><br>of Beauty</h1>
+      <p class="hero-sub">Handcrafted clothing that celebrates your individuality. From everyday elegance to royal grace — every piece tells your story.</p>
+      <div class="hero-btns">
+        <a class="btn-primary" onclick="showPage('collections')">Explore Collections</a>
+        <a class="btn-outline" onclick="showPage('customization')">Customize Yours</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Casual Wear <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Semi-Formal <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Formal Wear <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Custom Outfits <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">A Reflection of Beauty <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Casual Wear <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Semi-Formal <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Formal Wear <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Custom Outfits <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">A Reflection of Beauty <span class="marquee-dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <section>
+    <div class="section-tag">Our Collections</div>
+    <h2 class="section-title">Dressed for <em>Every</em> Occasion</h2>
+    <div class="section-sub">Three distinct worlds of style, curated for the modern woman who wears many hats.</div>
+    <div class="categories-grid reveal">
+      <div class="cat-card" onclick="showPage('collections');filterCollection('casual')">
+        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80" alt="Casual Wear"/>
+        <div class="cat-card-overlay">
+          <div class="cat-card-tag">Collection 01</div>
+          <div class="cat-card-title">Casual Wear</div>
+          <div class="cat-card-sub">Everyday Elegance</div>
+        </div>
+        <div class="cat-card-arrow">→</div>
+      </div>
+      <div class="cat-card" onclick="showPage('collections');filterCollection('semiformal')">
+        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80" alt="Semi-Formal"/>
+        <div class="cat-card-overlay">
+          <div class="cat-card-tag">Collection 02</div>
+          <div class="cat-card-title">Semi-Formal</div>
+          <div class="cat-card-sub">Chic Evenings</div>
+        </div>
+        <div class="cat-card-arrow">→</div>
+      </div>
+      <div class="cat-card" onclick="showPage('collections');filterCollection('formal')">
+        <img src="https://images.unsplash.com/photo-1594938298603-c8148c4b3b9e?w=800&q=80" alt="Formal Wear"/>
+        <div class="cat-card-overlay">
+          <div class="cat-card-tag">Collection 03</div>
+          <div class="cat-card-title">Formal Wear</div>
+          <div class="cat-card-sub">Royal Grace Collection</div>
+        </div>
+        <div class="cat-card-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Miorah -->
+  <section style="background:var(--warm-white); padding:7rem 6vw;">
+    <div class="why-grid">
+      <div class="why-img-wrap reveal">
+        <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80" alt="Boutique craftsmanship"/>
+        <div class="why-img-accent"></div>
+      </div>
+      <div class="reveal">
+        <div class="section-tag">Why Choose Us</div>
+        <h2 class="section-title">Crafted with <em>Passion</em></h2>
+        <div class="divider"></div>
+        <p class="section-sub">At Miorah, we believe clothing is a language. Every stitch, every fabric choice, every design speaks of who you are — and who you want to be.</p>
+        <div class="why-features">
+          <div class="why-feat">
+            <div class="why-feat-icon">✦</div>
+            <div>
+              <div class="why-feat-title">Fully Customizable</div>
+              <div class="why-feat-desc">Choose your fabric, design, color and size. We bring your vision to life exactly as imagined.</div>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-feat-icon">◈</div>
+            <div>
+              <div class="why-feat-title">Premium Fabrics</div>
+              <div class="why-feat-desc">Sourced from the finest mills — silks, chiffons, georgettes, and cottons of exceptional quality.</div>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="why-feat-icon">❋</div>
+            <div>
+              <div class="why-feat-title">Expert Craftsmanship</div>
+              <div class="why-feat-desc">Each garment is crafted by skilled artisans who treat every order with personal care and attention.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section style="background:var(--deep); padding:6rem 6vw; text-align:center;">
+    <div class="section-tag" style="justify-content:center; margin-bottom:1rem;">Special Service</div>
+    <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.2rem); color:var(--cream); font-weight:300; max-width:600px; margin:0 auto 2rem; line-height:1.2;">
+      Can't find what you're looking for? <em style="color:var(--gold-light); font-style:italic;">We'll create it.</em>
+    </h2>
+    <p style="font-size:0.85rem; color:rgba(250,247,242,0.5); max-width:480px; margin:0 auto 2.5rem; line-height:1.9; font-weight:300;">
+      Share your inspiration, and our team will design a one-of-a-kind outfit made just for you.
+    </p>
+    <a class="btn-primary" onclick="showPage('customization')" style="text-decoration:none;">Start Your Custom Order</a>
+  </section>
+
+  <!-- Instagram -->
+  <section style="text-align:center; padding:5rem 6vw;">
+    <div class="section-tag" style="justify-content:center;">Follow Along</div>
+    <h2 class="section-title" style="text-align:center;">Find Us on <em>Instagram</em></h2>
+    <a href="https://instagram.com" target="_blank" class="btn-outline" style="text-decoration:none; padding:0.8rem 1.8rem; color:var(--deep); border-color:var(--deep); display:inline-block; margin-top:1.5rem;">@miorah.boutique</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Miorah <span>Boutique</span></div>
+        <p class="footer-brand-desc">A curated clothing boutique in Bengaluru, crafting outfits that reflect the beauty in every woman. From everyday elegance to royal grace.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('collections')">Collections</a></li>
+          <li><a onclick="showPage('customization')">Customization</a></li>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Collections</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('collections');filterCollection('casual')">Casual Wear</a></li>
+          <li><a onclick="showPage('collections');filterCollection('semiformal')">Semi-Formal</a></li>
+          <li><a onclick="showPage('collections');filterCollection('formal')">Formal Wear</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Get in Touch</div>
+        <ul class="footer-links">
+          <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/919876543210" target="_blank">WhatsApp</a></li>
+          <li><a href="mailto:hello@miorahboutique.com">Email Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Miorah Boutique. All rights reserved.</div>
+      <div class="footer-copy">A Reflection of Beauty · Bengaluru, India</div>
+    </div>
+  </footer>
+
+</div><!-- end home -->
+
+
+<!-- ═══════════════ COLLECTIONS PAGE ═══════════════ -->
+<div class="page" id="page-collections">
+
+  <div class="collections-hero">
+    <div class="collections-hero-bg"></div>
+    <img class="collections-hero-img" src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1400&q=80" alt="Collections"/>
+    <div class="collections-hero-overlay"></div>
+    <div class="collections-hero-content">
+      <div class="page-hero-tag">Miorah Boutique</div>
+      <h1 class="page-hero-title">Our Collections</h1>
+    </div>
+  </div>
+
+  <div class="filter-tabs" style="margin-top:72px;">
+    <button class="filter-tab active" id="tab-all" onclick="filterCollection('all')">All Pieces</button>
+    <button class="filter-tab" id="tab-casual" onclick="filterCollection('casual')">Casual Wear — Everyday Elegance</button>
+    <button class="filter-tab" id="tab-semiformal" onclick="filterCollection('semiformal')">Semi-Formal — Chic Evenings</button>
+    <button class="filter-tab" id="tab-formal" onclick="filterCollection('formal')">Formal — Royal Grace</button>
+  </div>
+
+  <!-- CASUAL -->
+  <div class="gallery-section collection-block visible" id="block-casual">
+    <div class="gallery-header">
+      <div class="section-tag">Collection 01</div>
+      <h2 class="section-title">Casual Wear — <em>Everyday Elegance</em></h2>
+      <p class="section-sub">Simple, comfortable, and stylish — designed for the rhythm of everyday life.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=600&q=75" alt="Casual 1"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Linen Summer Kurta</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=75" alt="Casual 2"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Floral Midi Dress</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=600&q=75" alt="Casual 3"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Casual Coord Set</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEMI-FORMAL -->
+  <div class="gallery-section collection-block visible" id="block-semiformal" style="background:var(--warm-white);">
+    <div class="gallery-header">
+      <div class="section-tag">Collection 02</div>
+      <h2 class="section-title">Semi-Formal — <em>Chic Evenings</em></h2>
+      <p class="section-sub">For office gatherings, casual events, and evening outings — where style meets sophistication.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=75" alt="SF 1"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Draped Georgette Saree</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=75" alt="SF 2"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Flared Sharara Set</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1566206091558-7f218b696731?w=600&q=75" alt="SF 3"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Printed Silk Kurta</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FORMAL -->
+  <div class="gallery-section collection-block visible" id="block-formal">
+    <div class="gallery-header">
+      <div class="section-tag">Collection 03</div>
+      <h2 class="section-title">Formal Wear — <em>Royal Grace</em></h2>
+      <p class="section-sub">Elegant and luxurious designs for weddings, celebrations, and every grand occasion.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1594938298603-c8148c4b3b9e?w=600&q=75" alt="Formal 1"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Embroidered Lehenga</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&q=75" alt="Formal 2"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Bridal Anarkali</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=75" alt="Formal 3"/>
+        <div class="gallery-item-info"><div class="gallery-item-name">Velvet Gown Set</div><div class="gallery-item-price">Inquire for Pricing</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <section style="background:var(--deep); padding:5rem 6vw; text-align:center;">
+    <h2 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:2rem;font-weight:300;margin-bottom:1.5rem;">Don't see what you're looking for?</h2>
+    <a class="btn-primary" onclick="showPage('customization')" style="text-decoration:none;">Request a Custom Design</a>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Miorah <span>Boutique</span></div>
+        <p class="footer-brand-desc">A curated clothing boutique in Bengaluru, crafting outfits that reflect the beauty in every woman.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('collections')">Collections</a></li>
+          <li><a onclick="showPage('customization')">Customization</a></li>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Connect</div>
+        <ul class="footer-links">
+          <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+          <li><a href="https://wa.me/919876543210" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Location</div>
+        <ul class="footer-links">
+          <li><a>Bengaluru, Karnataka</a></li>
+          <li><a>India — 560001</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Miorah Boutique. All rights reserved.</div>
+    </div>
+  </footer>
+</div><!-- end collections -->
+
+
+<!-- ═══════════════ CUSTOMIZATION PAGE ═══════════════ -->
+<div class="page" id="page-customization">
+
+  <div class="collections-hero">
+    <div class="collections-hero-bg"></div>
+    <img class="collections-hero-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80" alt="Customization"/>
+    <div class="collections-hero-overlay"></div>
+    <div class="collections-hero-content" style="margin-top:72px;">
+      <div class="page-hero-tag">Personalized Service</div>
+      <h1 class="page-hero-title">Your Vision, <br>Our Craft</h1>
+    </div>
+  </div>
+
+  <div class="custom-intro" style="margin-top:72px;">
+    <div class="reveal">
+      <div class="section-tag">Custom Creations</div>
+      <h2 class="section-title">Tailored to <em>You</em></h2>
+      <div class="divider"></div>
+      <p class="section-sub" style="margin-bottom:1.5rem;">At Miorah, customization isn't just a service — it's our signature. We believe every woman deserves an outfit as unique as she is.</p>
+      <p style="font-size:0.85rem; color:var(--muted); line-height:1.9; font-weight:300;">Whether you have a clear vision or just a vague idea, our team will work with you every step of the way. Share a reference image from Pinterest or describe your dream look — we'll handle the rest with expertise and care.</p>
+      <div style="margin-top:2.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+        <a class="btn-outline" href="https://wa.me/919876543210" target="_blank" style="text-decoration:none; color:var(--deep); border-color:var(--deep);">WhatsApp Us</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80" alt="Customization process" style="width:100%;aspect-ratio:3/4;object-fit:cover;"/>
+    </div>
+  </div>
+
+  <div class="custom-steps">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-title">Four Easy <em>Steps</em></h2>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon">💬</div>
+        <div class="step-title">Consultation</div>
+        <div class="step-desc">Reach out via WhatsApp, Instagram, or our contact form. Share your ideas, occasion, and requirements.</div>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">02</div>
+        <div class="step-icon">🎨</div>
+        <div class="step-title">Design & Fabric</div>
+        <div class="step-desc">Select your preferred fabric, design pattern, color palette, and embellishment style from our curated options.</div>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">03</div>
+        <div class="step-icon">✂️</div>
+        <div class="step-title">Crafting</div>
+        <div class="step-desc">Our skilled artisans get to work. You'll receive updates as your outfit takes shape in our studio.</div>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">04</div>
+        <div class="step-icon">🌟</div>
+        <div class="step-title">Delivery & Fit</div>
+        <div class="step-desc">Your outfit is delivered with a fitting session. We make adjustments until it's absolutely perfect.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Miorah <span>Boutique</span></div><p class="footer-brand-desc">Your vision, our craft. Based in Bengaluru.</p></div>
+      <div><div class="footer-col-title">Navigate</div><ul class="footer-links"><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('collections')">Collections</a></li><li><a onclick="showPage('customization')">Customization</a></li><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('contact')">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Connect</div><ul class="footer-links"><li><a href="https://instagram.com" target="_blank">Instagram</a></li><li><a href="https://wa.me/919876543210" target="_blank">WhatsApp</a></li></ul></div>
+      <div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2025 Miorah Boutique. All rights reserved.</div></div>
+  </footer>
+</div><!-- end customization -->
+
+
+<!-- ═══════════════ ABOUT PAGE ═══════════════ -->
+<div class="page" id="page-about">
+
+  <div class="collections-hero">
+    <div class="collections-hero-bg"></div>
+    <img class="collections-hero-img" src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1400&q=80" alt="About"/>
+    <div class="collections-hero-overlay"></div>
+    <div class="collections-hero-content" style="margin-top:72px;">
+      <div class="page-hero-tag">Our Story</div>
+      <h1 class="page-hero-title">About Miorah</h1>
+    </div>
+  </div>
+
+  <div style="padding:7rem 6vw; margin-top:72px; max-width:800px;">
+    <div class="reveal">
+      <div class="section-tag">Our Journey</div>
+      <h2 class="section-title">Born from a <em>Passion</em> for Style</h2>
+      <div class="divider"></div>
+      <p style="font-size:0.9rem; color:var(--muted); line-height:2; font-weight:300; margin-bottom:1.5rem;">
+        Miorah Boutique began with a simple belief — that every woman deserves to feel extraordinary in what she wears. Founded in the heart of Bengaluru, we set out to bridge the gap between high-end fashion and personal expression.
+      </p>
+      <p style="font-size:0.9rem; color:var(--muted); line-height:2; font-weight:300; margin-bottom:1.5rem;">
+        What started as a small studio with a handful of dedicated artisans has grown into a boutique known for its impeccable craftsmanship, attention to detail, and deeply personal approach to dressing women for every milestone in their lives.
+      </p>
+      <p style="font-size:0.9rem; color:var(--muted); line-height:2; font-weight:300;">
+        From bridal lehengas to everyday kurtas, from boardroom-ready ensembles to celebration wear — Miorah crafts each piece with the same love and precision that defines our identity.
+      </p>
+    </div>
+  </div>
+
+  <div class="about-values">
+    <div class="section-tag" style="color:var(--gold);">What We Stand For</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);color:var(--cream);font-weight:300;">Our Core <em style="color:var(--gold-light);font-style:italic;">Values</em></h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">✦</div>
+        <div class="value-title">Craftsmanship</div>
+        <div class="value-desc">Every garment is stitched with precision and care by skilled artisans who take pride in their work. Quality is never compromised.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">◈</div>
+        <div class="value-title">Individuality</div>
+        <div class="value-desc">We celebrate what makes you unique. Our designs are as diverse as the women who wear them — there is no one-size-fits-all at Miorah.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">❋</div>
+        <div class="value-title">Trust & Transparency</div>
+        <div class="value-desc">We communicate openly at every step — from fabric selection to final delivery. Your confidence in us is something we earn every day.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <section style="padding:7rem 6vw; text-align:center;">
+    <div class="section-tag" style="justify-content:center;">Ready to Begin?</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;max-width:600px;margin:0 auto 2.5rem;line-height:1.2;">
+      Let's create something <em style="color:var(--rose);font-style:italic;">beautiful</em> together
+    </h2>
+    <div style="display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;">
+      <a class="btn-primary" onclick="showPage('collections')" style="text-decoration:none;">View Collections</a>
+      <a class="btn-outline" onclick="showPage('contact')" style="text-decoration:none; color:var(--deep); border-color:var(--deep);">Get in Touch</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Miorah <span>Boutique</span></div><p class="footer-brand-desc">Based in Bengaluru. Crafting beauty since 2020.</p></div>
+      <div><div class="footer-col-title">Navigate</div><ul class="footer-links"><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('collections')">Collections</a></li><li><a onclick="showPage('customization')">Customization</a></li><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('contact')">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Connect</div><ul class="footer-links"><li><a href="https://instagram.com" target="_blank">Instagram</a></li><li><a href="https://wa.me/919876543210" target="_blank">WhatsApp</a></li></ul></div>
+      <div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2025 Miorah Boutique. All rights reserved.</div></div>
+  </footer>
+</div><!-- end about -->
+
+
+<!-- ═══════════════ CONTACT PAGE ═══════════════ -->
+<div class="page" id="page-contact">
+  <div style="margin-top:72px;">
+  <div style="background:var(--deep); padding:7rem 6vw; display:flex; flex-direction:column; justify-content:center;">
+      <div class="section-tag" style="color:var(--gold);">Let's Connect</div>
+      <h2 class="section-title" style="color:var(--cream);">We'd Love to <em style="color:var(--gold-light);font-style:italic;">Hear</em> from You</h2>
+      <p style="font-size:0.85rem;color:rgba(250,247,242,0.5);line-height:1.9;font-weight:300;margin-top:1rem;max-width:500px;">Whether you have a question, a custom request, or just want to say hello — reach out anytime.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div>
+            <div class="contact-detail-label">Location</div>
+            <div class="contact-detail-value">Bengaluru, Karnataka<br>India — 560001</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📱</div>
+          <div>
+            <div class="contact-detail-label">WhatsApp</div>
+            <div class="contact-detail-value">+91 98765 43210</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">✉</div>
+          <div>
+            <div class="contact-detail-label">Email</div>
+            <div class="contact-detail-value">hello@miorahboutique.com</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🕐</div>
+          <div>
+            <div class="contact-detail-label">Working Hours</div>
+            <div class="contact-detail-value">Mon – Sat: 10AM – 7PM<br>Sunday: By Appointment</div>
+          </div>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="https://instagram.com" target="_blank" class="social-link">📸 Instagram</a>
+        <a href="https://wa.me/919876543210" target="_blank" class="social-link">💬 WhatsApp</a>
+      </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Miorah <span>Boutique</span></div><p class="footer-brand-desc">Based in Bengaluru. Crafting beauty since 2020.</p></div>
+      <div><div class="footer-col-title">Navigate</div><ul class="footer-links"><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('collections')">Collections</a></li><li><a onclick="showPage('customization')">Customization</a></li><li><a onclick="showPage('about')">About Us</a></li><li><a onclick="showPage('contact')">Contact</a></li></ul></div>
+      <div><div class="footer-col-title">Connect</div><ul class="footer-links"><li><a href="https://instagram.com" target="_blank">Instagram</a></li><li><a href="https://wa.me/919876543210" target="_blank">WhatsApp</a></li></ul></div>
+      <div></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2025 Miorah Boutique. All rights reserved.</div></div>
+  </footer>
+  </div>
+</div><!-- end contact -->
+
+
+<script>
+  // ── Page Navigation ──
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + id);
+    if(navEl) navEl.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    setTimeout(initReveal, 100);
+  }
+
+  // ── Collection Filter ──
+  function filterCollection(type) {
+    // update tabs
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    const tabEl = document.getElementById('tab-' + type);
+    if(tabEl) tabEl.classList.add('active');
+    else document.getElementById('tab-all').classList.add('active');
+
+    const blocks = ['casual','semiformal','formal'];
+    blocks.forEach(b => {
+      const el = document.getElementById('block-' + b);
+      if(type === 'all' || type === b) {
+        el.classList.add('visible');
+      } else {
+        el.classList.remove('visible');
+      }
+    });
+    window.scrollTo({top:200, behavior:'smooth'});
+  }
+
+  // ── Mobile Menu ──
+  function toggleMobile() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // ── Scroll Reveal ──
+  function initReveal() {
+    const els = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    els.forEach(el => observer.observe(el));
+  }
+  document.addEventListener('DOMContentLoaded', initReveal);
+
+  // ── Toast ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // ── Forms ──
+</script>
+</body>
+</html>
